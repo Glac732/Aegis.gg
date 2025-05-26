@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ageis - The Ultimate Discord Automod & Moderation Bot</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: #e0e0e0;
+    overflow-x: hidden;
+  }
+  header {
+    text-align: center;
+    padding: 5rem 2rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  header h1 {
+    font-weight: 600;
+    font-size: 3.5rem;
+    margin: 0 0 0.5rem;
+    letter-spacing: 0.06em;
+    color: #00ffc8;
+    text-shadow: 0 0 8px #00e6b8;
+  }
+  header p {
+    font-weight: 300;
+    font-size: 1.25rem;
+    max-width: 600px;
+    margin: 0 auto 1rem;
+    color: #a0f0db;
+    text-shadow: 0 0 4px #00b38f;
+  }
+  nav {
+    margin-top: 2.5rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+  .button {
+    background: #00ffc8;
+    color: #0d2733;
+    border: none;
+    border-radius: 30px;
+    padding: 15px 36px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    box-shadow: 0 0 8px #00ffc8aa;
+    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    user-select: none;
+    gap: 8px;
+    white-space: nowrap;
+  }
+  .button:hover {
+    background: #00e0b0;
+    box-shadow: 0 0 20px #00ffc8;
+    transform: scale(1.05);
+  }
+  .button:disabled, .button[disabled] {
+    background: #555;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+  }
+
+  main {
+    max-width: 960px;
+    margin: 0 auto 5rem;
+    padding: 0 1.5rem;
+  }
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 2.5rem;
+    margin-top: 3rem;
+  }
+  .feature-card {
+    background: #14383e99;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 0 20px #00ffc855;
+    backdrop-filter: blur(8px);
+    transition: box-shadow 0.3s ease;
+  }
+  .feature-card:hover {
+    box-shadow: 0 0 30px #00ffd1bb;
+  }
+  .feature-icon {
+    font-size: 3.2rem;
+    margin-bottom: 1rem;
+    color: #00ffc8;
+    text-shadow: 0 0 8px #00e6b8;
+  }
+  .feature-title {
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin: 0 0 0.75rem;
+  }
+  .feature-desc {
+    font-weight: 300;
+    line-height: 1.5;
+    color: #c2f4e3;
+  }
+  footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: #55c8b5;
+    font-weight: 300;
+    font-size: 0.9rem;
+    background: #092c31;
+    box-shadow: inset 0 8px 12px -10px #00ffc8aa;
+  }
+  /* Animated background circles */
+  .bg-shapes {
+    position: fixed;
+    top: -50vh;
+    left: -50vw;
+    width: 200vw;
+    height: 200vh;
+    pointer-events: none;
+    z-index: 0;
+    overflow: visible;
+  }
+  .circle {
+    position: absolute;
+    border-radius: 50%;
+    filter: drop-shadow(0 0 10px #00ffc8cc);
+    opacity: 0.15;
+    animation: float 20s linear infinite;
+  }
+  .circle1 {
+    width: 220px;
+    height: 220px;
+    background: #00ffc8;
+    top: 20%;
+    left: 15%;
+    animation-delay: 0s;
+  }
+  .circle2 {
+    width: 340px;
+    height: 340px;
+    background: #00e0b0;
+    top: 50%;
+    left: 65%;
+    animation-delay: 6s;
+  }
+  .circle3 {
+    width: 160px;
+    height: 160px;
+    background: #00b38f;
+    top: 80%;
+    left: 30%;
+    animation-delay: 10s;
+  }
+  @keyframes float {
+    0% { transform: translateY(0) translateX(0) rotate(0deg); }
+    50% { transform: translateY(-50px) translateX(20px) rotate(180deg); }
+    100% { transform: translateY(0) translateX(0) rotate(360deg); }
+  }
+  /* Button spotlight on focus */
+  .button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 25px #00ffc8, 0 0 45px #00e0b0;
+  }
+  /* Responsive heading scaling */
+  @media (max-width: 480px) {
+    header h1 {
+      font-size: 2.4rem;
+    }
+    header p {
+      font-size: 1rem;
+    }
+  }
+  /* User info styling for logged in state */
+  #user-info {
+    margin-top: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    color: #00ffc8;
+    text-shadow: 0 0 6px #00e6b8;
+    font-weight: 600;
+  }
+  #user-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #00ffc8bb;
+  }
+</style>
+</head>
+<body>
+<div class="bg-shapes" aria-hidden="true">
+  <div class="circle circle1"></div>
+  <div class="circle circle2"></div>
+  <div class="circle circle3"></div>
+</div>
+
+<header>
+  <h1>Ageis</h1>
+  <p>Your Ultimate Discord Automod & Moderation Assistant</p>
+
+  <nav id="nav-buttons">
+    <a href="https://discord.com/oauth2/authorize?client_id=1376553585969594408&amp;scope=bot&amp;permissions=8" target="_blank" rel="noopener" class="button" aria-label="Invite Ageis bot to your server">Invite</a>
+    <a href="#" class="button" aria-label="Join support server">Support Server</a>
+    <a href="#" class="button" aria-label="View Ageis bot commands/help">Commands</a>
+    <button id="login-btn" class="button" aria-label="Login with Discord">Login with Discord</button>
+  </nav>
+
+  <div id="user-info" aria-live="polite" aria-atomic="true" style="display:none;">
+    <img id="user-avatar" src="" alt="User avatar" />
+    <span id="user-name"></span>
+    <button id="logout-btn" class="button" style="background:#ff4c4c; color:#fff; padding:8px 20px; font-size:1rem;">Logout</button>
+  </div>
+</header>
+
+<main>
+  <section class="features" aria-label="Features of Ageis bot">
+    <article class="feature-card" tabindex="0" role="region" aria-labelledby="feature-automod-title">
+      <div class="feature-icon" aria-hidden="true">🛡️</div>
+      <h2 id="feature-automod-title" class="feature-title">Automod Protection</h2>
+      <p class="feature-desc">Automatically detect and block spam, harmful links, and bad language to keep your community safe and friendly without lifting a finger.</p>
+    </article>
+
+    <article class="feature-card" tabindex="0" role="region" aria-labelledby="feature-moderation-title">
+      <div class="feature-icon" aria-hidden="true">⚙️</div>
+      <h2 id="feature-moderation-title" class="feature-title">Advanced Moderation</h2>
+      <p class="feature-desc">Powerful moderation tools including timed mutes, warnings, bans, role management, and customizable moderation logs for your convenience.</p>
+    </article>
+
+    <article class="feature-card" tabindex="0" role="region" aria-labelledby="feature-help-title">
+      <div class="feature-icon" aria-hidden="true">❓</div>
+      <h2 id="feature-help-title" class="feature-title">Interactive Help &amp; Support</h2>
+      <p class="feature-desc">User-friendly commands with interactive buttons and real-time help menus that make managing your server easy and fun.</p>
+    </article>
+  </section>
+</main>
+
+<footer>
+  &copy; 2024 Ageis Bot • Designed with ♥ by You
+</footer>
+
+<script>
+  // Constants for OAuth2 login
+  const CLIENT_ID = '1376553585969594408';
+  const REDIRECT_URI = window.location.origin + window.location.pathname; // current url without query or hash
+  const OAUTH2_URL = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
+
+  // Elements
+  const loginBtn = document.getElementById('login-btn');
+  const logoutBtn = document.getElementById('logout-btn');
+  const userInfoDiv = document.getElementById('user-info');
+  const userNameSpan = document.getElementById('user-name');
+  const userAvatarImg = document.getElementById('user-avatar');
+  const navButtons = document.getElementById('nav-buttons');
+
+  // Function to parse access token from URL hash
+  function getAccessTokenFromHash() {
+    const hash = window.location.hash.substring(1);
+    const params = new URLSearchParams(hash);
+    return params.get('access_token');
+  }
+
+  // Function to clear access token from URL hash (clean url)
+  function clearUrlHash() {
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState({}, document.title, REDIRECT_URI);
+    } else {
+      window.location.hash = '';
+    }
+  }
+
+  // Function to fetch user info using access token
+  async function fetchUserInfo(token) {
+    try {
+      const res = await fetch('https://discord.com/api/users/@me', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) throw new Error('Failed to fetch user info');
+      const data = await res.json();
+      return data;
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
+  }
+
+  // Show user info in header
+  function showUserInfo(user) {
+    userNameSpan.textContent = `${user.username}#${user.discriminator}`;
+    userAvatarImg.src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=64`;
+    userAvatarImg.alt = `${user.username} avatar`;
+    userInfoDiv.style.display = 'flex';
+    navButtons.style.display = 'none';
+  }
+
+  // Hide user info show nav buttons
+  function showNavButtons() {
+    userInfoDiv.style.display = 'none';
+    navButtons.style.display = 'flex';
+  }
+
+  // Clear login info and logout
+  function logout() {
+    localStorage.removeItem('discord_token');
+    localStorage.removeItem('discord_user');
+    showNavButtons();
+  }
+
+  // Initialization - check if token in local storage or URL
+  async function initLogin() {
+    let token = localStorage.getItem('discord_token');
+
+    if (!token) {
+      // Check URL hash
+      token = getAccessTokenFromHash();
+      if (token) {
+        localStorage.setItem('discord_token', token);
+        clearUrlHash();
+      }
+    }
+
+    if (token) {
+      // Try to fetch user info
+      let user = localStorage.getItem('discord_user');
+      if (user) {
+        try {
+          user = JSON.parse(user);
+          showUserInfo(user);
+          return;
+        } catch {
+          localStorage.removeItem('discord_user');
+        }
+      }
+      const userInfo = await fetchUserInfo(token);
+      if (userInfo) {
+        localStorage.setItem('discord_user', JSON.stringify(userInfo));
+        showUserInfo(userInfo);
+      } else {
+        logout();
+      }
+    } else {
+      showNavButtons();
+    }
+  }
+
+  loginBtn.addEventListener('click', () => {
+    window.location.href = OAUTH2_URL;
+  });
+  logoutBtn.addEventListener('click', () => {
+    logout();
+  });
+
+  // Commands button popup
+  const commandsButton = document.querySelector('a.button[aria-label="View Ageis bot commands/help"]');
+  commandsButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    alert(
+`Ageis Bot Commands:\n
+!automod on/off - Toggle automod protection
+!mute @user [time] - Mute a user temporarily
+!warn @user [reason] - Warn a user
+!ban @user [reason] - Ban a user
+!help - Show this help menu
+\nMore features coming soon!`
+    );
+  });
+
+  // Support Server button placeholder
+  const supportButton = document.querySelector('a.button[aria-label="Join support server"]');
+  supportButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    alert('Support server link is not set yet. Please check back soon!');
+  });
+
+  // On load initialize login state
+  window.addEventListener('load', initLogin);
+</script>
+</body>
+</html>
+
