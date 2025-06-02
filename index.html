@@ -1,286 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Ageis - Ultimate Discord Automod & Moderation Bot</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
-
-  * {
-    box-sizing: border-box;
-  }
-  body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: radial-gradient(circle at top left, #2e005f, #1a0038 70%);
-    color: #d5c7f7;
-    overflow-x: hidden;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-  .container {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-    flex-grow: 1;
-  }
-  header {
-    text-align: center;
-    padding: 8rem 1rem 4rem;
-    position: relative;
-    z-index: 2;
-    user-select: none;
-  }
-  header h1 {
-    font-weight: 900;
-    font-size: 4.5rem;
-    letter-spacing: 0.15em;
-    margin-bottom: 0.3rem;
-    color: #b07fff;
-    text-shadow:
-      0 0 6px #b07fffbb;
-  }
-  header p {
-    font-weight: 300;
-    font-size: 1.375rem;
-    max-width: 600px;
-    margin: 0 auto 3rem;
-    color: #cbb9fcdd;
-    letter-spacing: 0.05em;
-    text-shadow: 0 0 3px #a377de66;
-  }
-  nav {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-  .button {
-    background: linear-gradient(145deg, #9f7fff, #6d4bc3);
-    color: #f0eaff;
-    border: none;
-    border-radius: 9999px;
-    padding: 15px 40px;
-    font-size: 1.125rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    cursor: pointer;
-    box-shadow:
-      0 4px 10px rgb(159 127 255 / 0.6);
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition:
-      background 0.3s ease,
-      box-shadow 0.3s ease,
-      transform 0.2s ease;
-    user-select: none;
-  }
-  .button:hover,
-  .button:focus-visible {
-    background: linear-gradient(145deg, #b396ff, #846bcc);
-    box-shadow:
-      0 6px 20px rgb(180 140 255 / 0.8);
-    transform: scale(1.04);
-    outline: none;
-  }
-  .button:active {
-    transform: scale(0.97);
-    box-shadow:
-      0 3px 6px rgb(159 127 255 / 0.7);
-  }
-
-  main {
-    flex-grow: 1;
-    margin-bottom: 4rem;
-  }
-  .features {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
-    gap: 3rem;
-    margin-top: 3.5rem;
-    padding-bottom: 1rem;
-  }
-  .feature-card {
-    background: rgba(159,127,255, 0.15);
-    border-radius: 2rem;
-    padding: 2.5rem 2rem 3rem;
-    box-shadow:
-      inset 0 0 10px #bda1ff88;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    transition: box-shadow 0.3s ease;
-  }
-  .feature-card:hover {
-    box-shadow:
-      inset 0 0 16px #d1bfffcc;
-    transform: translateY(-6px);
-  }
-  .feature-icon {
-    font-size: 4.2rem;
-    margin-bottom: 1.1rem;
-    color: #ab78ff;
-    text-shadow:
-      0 0 6px #ab78ffbb;
-  }
-  .feature-title {
-    font-weight: 700;
-    font-size: 1.6rem;
-    margin-bottom: 0.8rem;
-    color: #cbb9fcdd;
-    letter-spacing: 0.04em;
-  }
-  .feature-desc {
-    font-weight: 300;
-    font-size: 1.1rem;
-    line-height: 1.5;
-    color: #d6caffdd;
-    user-select: text;
-  }
-
-  footer {
-    text-align: center;
-    padding: 1.7rem 1rem;
-    color: #ddaaffdd;
-    font-weight: 300;
-    font-size: 1rem;
-    background: #1a0038;
-    user-select: none;
-  }
-
-  /* Animated background bubbles */
-  .bg-bubbles {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    overflow: visible;
-    z-index: 0;
-  }
-  .bubble {
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0.15;
-    background: radial-gradient(circle, #b399ffcc 0%, #5932a8 70%);
-    animation-name: rise;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-  }
-  .bubble:nth-child(1) {
-    width: 94px;
-    height: 94px;
-    left: 12%;
-    bottom: -100px;
-    animation-duration: 23s;
-    animation-delay: 0s;
-  }
-  .bubble:nth-child(2) {
-    width: 150px;
-    height: 150px;
-    left: 38%;
-    bottom: -120px;
-    animation-duration: 27s;
-    animation-delay: 6s;
-  }
-  .bubble:nth-child(3) {
-    width: 80px;
-    height: 80px;
-    left: 65%;
-    bottom: -90px;
-    animation-duration: 24s;
-    animation-delay: 3s;
-  }
-  .bubble:nth-child(4) {
-    width: 120px;
-    height: 120px;
-    left: 85%;
-    bottom: -110px;
-    animation-duration: 30s;
-    animation-delay: 8s;
-  }
-  .bubble:nth-child(5) {
-    width: 42px;
-    height: 42px;
-    left: 55%;
-    bottom: -80px;
-    animation-duration: 19s;
-    animation-delay: 1s;
-  }
-  @keyframes rise {
-    0% {
-      transform: translateY(0) scale(1);
-      opacity: 0.15;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>𝑋𝑖𝑡𝑛𝑤 𝑏𝑢𝑠𝑛𝑦𝑛𝑝 ™ !</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    50% {
-      opacity: 0.25;
-      transform: translateY(-45vh) scale(1.1);
-    }
-    100% {
-      transform: translateY(-95vh) scale(1);
-      opacity: 0;
-    }
-  }
 
-  @media (max-width: 600px) {
-    header h1 {
-      font-size: 3rem;
-      letter-spacing: 0.1em;
+    body {
+      background: radial-gradient(circle at center, #4d0000, #0d0000);
+      color: #ff4d4d;
+      text-align: center;
+      padding: 3rem 1rem;
     }
-    header p {
-      font-size: 1.1rem;
+
+    h1 {
+      font-size: 4rem;
+      text-shadow: 0 0 25px red;
       margin-bottom: 2rem;
+      animation: glowPulse 3s infinite ease-in-out;
     }
-  }
-</style>
+
+    .button {
+      display: inline-block;
+      margin: 1rem;
+      padding: 1rem 2rem;
+      font-size: 1.5rem;
+      border: 2px solid #ff1a1a;
+      border-radius: 12px;
+      color: white;
+      background: transparent;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 0 20px #ff1a1a;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .button:hover {
+      background-color: #ff1a1a;
+      box-shadow: 0 0 40px #ff1a1a, 0 0 60px #ff1a1a;
+      transform: scale(1.05);
+    }
+
+    .about {
+      margin-top: 4rem;
+      font-size: 1.2rem;
+      color: #ff9999;
+      text-shadow: 0 0 10px #ff4d4d;
+      animation: fadeIn 2s ease-in-out forwards;
+    }
+
+    @keyframes glowPulse {
+      0%, 100% {
+        text-shadow: 0 0 25px red, 0 0 50px red;
+      }
+      50% {
+        text-shadow: 0 0 10px red, 0 0 30px red;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="bg-bubbles" aria-hidden="true">
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
+  <h1>𝑋𝑖𝑡𝑛𝑤 𝑏𝑢𝑠𝑛𝑦𝑛𝑝 ™ !</h1>
+
+  <a href="https://discord.gg/zeKJ5zabc2" class="button" target="_blank">Explore Server</a>
+  <a href="#about" class="button">About Us</a>
+
+  <div id="about" class="about">
+    <p><strong>Owner:</strong> @𓆩 𝒯𝒶𝓁𝒽𝒶 <3 𓆪</p>
+    <p><strong>Created At:</strong> May 17, 2025 at 7:27 PM (16 days ago)</p>
   </div>
-
-  <header role="banner" aria-label="Site header">
-    <h1>AGEIS</h1>
-    <p>Your Ultimate Discord Automod & Moderation Assistant</p>
-    <nav role="navigation" aria-label="Primary navigation">
-      <a href="https://discord.com/oauth2/authorize?client_id=1376553585969594408&amp;scope=bot&amp;permissions=8" class="button" target="_blank" rel="noopener" aria-label="Invite Ageis bot to your server">Invite Bot</a>
-      <a href="commands.html" class="button" aria-label="Go to commands and help page">Commands &amp; Help</a>
-      <a href="https://discord.com/oauth2/authorize?client_id=1376553585969594408" class="button" aria-label="Login with Discord">Login with Discord</a>
-    </nav>
-  </header>
-
-  <main class="container" role="main">
-    <section class="features" aria-label="Core features of Ageis bot">
-      <article class="feature-card" tabindex="0" role="region" aria-labelledby="feature-automod-title">
-        <div class="feature-icon" aria-hidden="true">🛡️</div>
-        <h2 id="feature-automod-title" class="feature-title">Automod Protection</h2>
-        <p class="feature-desc">Automatically detect and block spam, harmful links, and bad language to keep your community safe and friendly without lifting a finger.</p>
-      </article>
-
-      <article class="feature-card" tabindex="0" role="region" aria-labelledby="feature-moderation-title">
-        <div class="feature-icon" aria-hidden="true">⚙️</div>
-        <h2 id="feature-moderation-title" class="feature-title">Advanced Moderation</h2>
-        <p class="feature-desc">Powerful moderation tools including timed mutes, warnings, bans, role management, and customizable moderation logs for your convenience.</p>
-      </article>
-
-      <article class="feature-card" tabindex="0" role="region" aria-labelledby="feature-help-title">
-        <div class="feature-icon" aria-hidden="true">❓</div>
-        <h2 id="feature-help-title" class="feature-title">Interactive Help &amp; Support</h2>
-        <p class="feature-desc">User-friendly commands with interactive buttons and real-time help menus that make managing your server easy and fun.</p>
-      </article>
-    </section>
-  </main>
-
-  <footer role="contentinfo">&copy; 2024 Ageis Bot • Designed with ♥ by You</footer>
 </body>
 </html>
 
