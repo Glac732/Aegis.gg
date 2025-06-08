@@ -49,28 +49,26 @@
       top: 0;
       left: 0;
       width: 100%;
-      padding: 1.5rem;
+      padding: 1rem 2rem;
       background: rgba(0, 0, 0, 0.95);
       backdrop-filter: blur(10px);
       z-index: 1000;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .nav-links {
       display: flex;
-      justify-content: center;
-      gap: 2rem;
       flex-wrap: wrap;
+      gap: 1rem;
     }
 
     .nav-button {
-      padding: 1rem 2rem;
+      padding: 0.6rem 1.2rem;
       color: var(--primary);
       text-decoration: none;
-      border-radius: 8px;
+      border-radius: 6px;
       background: rgba(255, 255, 255, 0.05);
       transition: all 0.3s ease;
     }
@@ -82,13 +80,51 @@
     }
 
     .theme-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 26px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
       cursor: pointer;
-      padding: 0.6rem 1.2rem;
-      background: var(--gradient);
-      border-radius: 20px;
-      color: var(--secondary);
-      font-weight: bold;
-      border: none;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #ccc;
+      transition: 0.4s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #00f7ff;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(24px);
     }
 
     section {
@@ -105,7 +141,7 @@
     }
 
     .home-content h1 {
-      font-size: 5rem;
+      font-size: 4rem;
       margin-bottom: 1rem;
       background: var(--gradient);
       -webkit-background-clip: text;
@@ -114,8 +150,8 @@
     }
 
     .invite-btn {
-      padding: 1.2rem 3rem;
-      font-size: 1.2rem;
+      padding: 1rem 2rem;
+      font-size: 1rem;
       background: var(--gradient);
       color: var(--secondary);
       border: none;
@@ -124,7 +160,6 @@
       text-decoration: none;
       font-weight: 600;
       margin-top: 2rem;
-      display: inline-block;
       transition: all 0.3s ease;
     }
 
@@ -135,9 +170,9 @@
 
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 2rem;
-      max-width: 1400px;
+      max-width: 1300px;
       margin: 0 auto;
     }
 
@@ -147,7 +182,6 @@
       border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.1);
       transition: all 0.4s ease;
-      opacity: 1;
     }
 
     .feature-card:hover {
@@ -166,17 +200,9 @@
       50% { transform: translateY(-20px); }
     }
 
-    @keyframes colorCycle {
-      0% { color: #00f7ff; }
-      25% { color: #ff00ff; }
-      50% { color: #00ff00; }
-      75% { color: #ffff00; }
-      100% { color: #00f7ff; }
-    }
-
     @media (max-width: 768px) {
       .home-content h1 {
-        font-size: 3rem;
+        font-size: 2.5rem;
       }
 
       .nav-links {
@@ -184,9 +210,8 @@
         align-items: center;
       }
 
-      .nav-button {
-        width: 100%;
-        text-align: center;
+      .theme-toggle {
+        margin-top: 1rem;
       }
     }
   </style>
@@ -201,7 +226,12 @@
       <a href="#about" class="nav-button">About</a>
       <a href="#premium" class="nav-button">Premium</a>
     </div>
-    <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+    <div class="theme-toggle">
+      <label class="switch">
+        <input type="checkbox" id="themeSwitch">
+        <span class="slider"></span>
+      </label>
+    </div>
   </nav>
 
   <section id="home" class="home" data-aos="fade-up">
@@ -227,23 +257,24 @@
     </div>
   </section>
 
-  <!-- Existing TEAM, ABOUT, PREMIUM sections go here unchanged -->
-
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>
     AOS.init();
 
-    function toggleTheme() {
-      const current = document.documentElement.getAttribute('data-theme');
-      const next = current === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-    }
+    // Theme toggle logic
+    const toggleSwitch = document.getElementById('themeSwitch');
+    const root = document.documentElement;
 
-    // Load theme preference on page load
+    toggleSwitch.addEventListener('change', () => {
+      const theme = toggleSwitch.checked ? 'light' : 'dark';
+      root.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+    });
+
     window.addEventListener('DOMContentLoaded', () => {
-      const storedTheme = localStorage.getItem('theme') || 'dark';
-      document.documentElement.setAttribute('data-theme', storedTheme);
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      root.setAttribute('data-theme', savedTheme);
+      toggleSwitch.checked = savedTheme === 'light';
     });
   </script>
 </body>
