@@ -1,20 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Nexus Bot - Ultimate Discord Bot!</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
 
   <style>
     :root {
-      --primary: #ffffff;
-      --secondary: #0a0a0a;
+      --primary-light: #0a0a0a;
+      --secondary-light: #ffffff;
+      --primary-dark: #ffffff;
+      --secondary-dark: #0a0a0a;
       --accent: #00f7ff;
       --gradient: linear-gradient(45deg, #00ffff, #ffffff);
-      --emphasis: #ff00cc;
+    }
+
+    [data-theme="dark"] {
+      --primary: var(--primary-dark);
+      --secondary: var(--secondary-dark);
+    }
+
+    [data-theme="light"] {
+      --primary: var(--primary-light);
+      --secondary: var(--secondary-light);
     }
 
     * {
@@ -30,6 +41,7 @@
       min-height: 100vh;
       overflow-x: hidden;
       scroll-behavior: smooth;
+      transition: background 0.5s, color 0.5s;
     }
 
     nav.nav {
@@ -38,42 +50,49 @@
       left: 0;
       width: 100%;
       padding: 1.5rem;
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(0, 0, 0, 0.95);
       backdrop-filter: blur(10px);
       z-index: 1000;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       display: flex;
-      justify-content: center;
-      animation: fadeInDown 1s ease-out;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .nav-links {
       display: flex;
-      gap: 1.5rem;
+      justify-content: center;
+      gap: 2rem;
       flex-wrap: wrap;
     }
 
     .nav-button {
-      padding: 0.8rem 1.5rem;
+      padding: 1rem 2rem;
       color: var(--primary);
       text-decoration: none;
-      border-radius: 12px;
+      border-radius: 8px;
       background: rgba(255, 255, 255, 0.05);
       transition: all 0.3s ease;
-      font-weight: 600;
-      border: 2px solid transparent;
     }
 
     .nav-button:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 247, 255, 0.2);
+    }
+
+    .theme-toggle {
+      cursor: pointer;
+      padding: 0.6rem 1.2rem;
       background: var(--gradient);
+      border-radius: 20px;
       color: var(--secondary);
-      border-color: var(--accent);
-      box-shadow: 0 5px 15px rgba(0, 247, 255, 0.4);
-      transform: scale(1.05);
+      font-weight: bold;
+      border: none;
     }
 
     section {
-      padding: 120px 2rem 80px;
+      padding: 100px 2rem;
     }
 
     .home {
@@ -82,7 +101,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      background: radial-gradient(circle at center, rgba(0, 247, 255, 0.1), transparent 70%);
+      background: radial-gradient(circle at center, rgba(0,247,255,0.1) 0%, transparent 70%);
     }
 
     .home-content h1 {
@@ -91,13 +110,7 @@
       background: var(--gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      animation: float 3s ease-in-out infinite, glow 3s infinite ease-in-out;
-    }
-
-    .home-content p {
-      font-size: 1.5rem;
-      color: #ccc;
-      margin-bottom: 2rem;
+      animation: float 3s ease-in-out infinite;
     }
 
     .invite-btn {
@@ -110,16 +123,17 @@
       cursor: pointer;
       text-decoration: none;
       font-weight: 600;
+      margin-top: 2rem;
+      display: inline-block;
       transition: all 0.3s ease;
-      box-shadow: 0 10px 25px rgba(0, 247, 255, 0.3);
     }
 
     .invite-btn:hover {
-      transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 20px 30px rgba(0, 247, 255, 0.4);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 247, 255, 0.3);
     }
 
-    .features-grid, .team-grid {
+    .features-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 2rem;
@@ -127,72 +141,29 @@
       margin: 0 auto;
     }
 
-    .feature-card, .team-member {
+    .feature-card {
       background: rgba(255, 255, 255, 0.05);
       padding: 2rem;
       border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.1);
       transition: all 0.4s ease;
-      position: relative;
+      opacity: 1;
     }
 
-    .feature-card:hover, .team-member:hover {
+    .feature-card:hover {
       transform: translateY(-10px);
-      box-shadow: 0 20px 40px rgba(0, 247, 255, 0.3);
+      box-shadow: 0 20px 40px rgba(0, 247, 255, 0.2);
     }
 
     .feature-icon {
       font-size: 2.5rem;
       margin-bottom: 1rem;
       color: var(--accent);
-      animation: pulse 2s infinite;
-    }
-
-    .animated-text {
-      animation: colorCycle 8s infinite;
-    }
-
-    .pricing-container {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      flex-wrap: wrap;
-    }
-
-    .pricing-card {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 2rem;
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      max-width: 400px;
-      text-align: center;
-    }
-
-    .subscribe-btn {
-      padding: 1rem 2rem;
-      border: none;
-      border-radius: 50px;
-      background: var(--gradient);
-      color: var(--secondary);
-      font-weight: bold;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
     }
 
     @keyframes float {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-20px); }
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.2); }
-    }
-
-    @keyframes glow {
-      0%, 100% { text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent); }
-      50% { text-shadow: 0 0 30px var(--accent), 0 0 50px var(--accent); }
     }
 
     @keyframes colorCycle {
@@ -203,43 +174,77 @@
       100% { color: #00f7ff; }
     }
 
-    @keyframes fadeInDown {
-      0% { opacity: 0; transform: translateY(-30px); }
-      100% { opacity: 1; transform: translateY(0); }
+    @media (max-width: 768px) {
+      .home-content h1 {
+        font-size: 3rem;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .nav-button {
+        width: 100%;
+        text-align: center;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAVIGATION -->
   <nav class="nav">
     <div class="nav-links">
-      <a href="#home" class="nav-button">🏠 Home</a>
-      <a href="#features" class="nav-button">✨ Features</a>
-      <a href="#team" class="nav-button">🧠 Team</a>
-      <a href="#about" class="nav-button">📜 About</a>
-      <a href="#premium" class="nav-button">💎 Premium</a>
+      <a href="#home" class="nav-button">Home</a>
+      <a href="#features" class="nav-button">Features</a>
+      <a href="#team" class="nav-button">Team</a>
+      <a href="#about" class="nav-button">About</a>
+      <a href="#premium" class="nav-button">Premium</a>
     </div>
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
   </nav>
 
-  <!-- Sections -->
-  <section id="home" class="home">
-    <div class="home-content" data-aos="fade-up">
-      <h1>Nexus Bot 🤖</h1>
+  <section id="home" class="home" data-aos="fade-up">
+    <div class="home-content">
+      <h1>Nexus Bot</h1>
       <p>The Ultimate Discord Experience</p>
-      <a href="https://dsc.gg/nexuus" class="invite-btn">➕ Add to Discord</a>
+      <a href="https://dsc.gg/nexuus" class="invite-btn">Add to Discord</a>
     </div>
   </section>
 
-  <!-- Additional sections stay the same; use data-aos="fade-up" or similar in elements -->
+  <section id="features">
+    <div class="features-grid">
+      <div class="feature-card" data-aos="zoom-in"><i class="fas fa-handshake feature-icon"></i><h3>Welcome</h3><p>Automated welcome messages and role assignments.</p></div>
+      <div class="feature-card" data-aos="zoom-in"><i class="fas fa-wrench feature-icon"></i><h3>Utility</h3><p>Useful tools like poll, reminders, and server info.</p></div>
+      <div class="feature-card" data-aos="zoom-in"><i class="fas fa-laugh feature-icon"></i><h3>Fun</h3><p>Engaging fun commands like memes, jokes, and more.</p></div>
+      <div class="feature-card" data-aos="zoom-in"><i class="fas fa-shield-alt feature-icon"></i><h3>General</h3><p>Essential commands for server management and utility functions.</p></div>
+      <div class="feature-card" data-aos="zoom-in"><i class="fas fa-gavel feature-icon"></i><h3>Moderation</h3><p>Advanced moderation tools to keep your server safe and organized.</p></div>
+      <div class="feature-card" data-aos="zoom-in"><i class="fas fa-robot feature-icon"></i><h3>Automod</h3><p>Automated moderation features to prevent spam and unwanted content.</p></div>
+      <div class="feature-card" data-aos="zoom-in"><i class="fas fa-lock feature-icon"></i><h3>Security</h3><p>Premium security features including anti-nuke protection.</p></div>
+      <div class="feature-card" data-aos="zoom-in"><i class="fas fa-ticket-alt feature-icon"></i><h3>Ticket System</h3><p>Advanced ticket management for user support.</p></div>
+      <div class="feature-card" data-aos="zoom-in"><i class="fas fa-users feature-icon"></i><h3>Reaction Roles</h3><p>Automated role assignment through reactions.</p></div>
+      <div class="feature-card" data-aos="zoom-in"><i class="fas fa-gift feature-icon"></i><h3>Giveaways</h3><p>Easy-to-run giveaways with timer, entries, and auto-winners.</p></div>
+    </div>
+  </section>
 
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <!-- Existing TEAM, ABOUT, PREMIUM sections go here unchanged -->
+
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>
-    AOS.init({
-      once: true,
-      duration: 1000
+    AOS.init();
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    }
+
+    // Load theme preference on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      const storedTheme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', storedTheme);
     });
   </script>
-  <script src="//code.tidio.co/0palmwvgehxscbgijvlsrpxntovje7aw.js" async></script>
 </body>
 </html>
