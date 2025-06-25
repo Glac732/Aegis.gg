@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Nexus Bot - Ultimate Discord Bot!</title>
+  <title>Nexus Bot - Next-Gen Discord Protection</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet"/>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
 
   <style>
     :root {
       --primary: #ffffff;
-      --secondary: #0a0a0a;
+      --secondary: #0e0e0e;
       --accent: #00f7ff;
-      --gradient: linear-gradient(45deg, #00ffff, #ffffff);
+      --gradient: linear-gradient(135deg, #00f7ff, #6f00ff);
     }
 
     * {
@@ -26,7 +26,6 @@
       background: var(--secondary);
       color: var(--primary);
       min-height: 100vh;
-      overflow-x: hidden;
       scroll-behavior: smooth;
     }
 
@@ -35,33 +34,33 @@
       top: 0;
       left: 0;
       width: 100%;
-      padding: 1.5rem;
-      background: rgba(0, 0, 0, 0.95);
+      padding: 1rem 2rem;
+      background: rgba(0, 0, 0, 0.8);
       backdrop-filter: blur(10px);
       z-index: 1000;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: center;
     }
 
     .nav-links {
       display: flex;
-      justify-content: center;
-      gap: 2rem;
+      gap: 1.5rem;
       flex-wrap: wrap;
     }
 
     .nav-button {
-      padding: 1rem 2rem;
       color: var(--primary);
       text-decoration: none;
+      padding: 0.7rem 1.4rem;
       border-radius: 8px;
       background: rgba(255, 255, 255, 0.05);
-      transition: all 0.3s ease;
+      transition: 0.3s;
     }
 
     .nav-button:hover {
-      background: rgba(255, 255, 255, 0.1);
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0, 247, 255, 0.2);
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 10px rgba(0, 247, 255, 0.2);
+      transform: translateY(-2px);
     }
 
     section {
@@ -69,71 +68,65 @@
     }
 
     .home {
-      height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
+      height: 100vh;
       text-align: center;
-      background: radial-gradient(circle at center, rgba(0,247,255,0.1) 0%, transparent 70%);
+      background: radial-gradient(circle at center, rgba(0, 247, 255, 0.15) 0%, transparent 70%);
     }
 
-    .glow-text {
-      background: linear-gradient(90deg, #00f7ff, #ff00ff, #00ff00, #ffff00, #00f7ff);
-      background-size: 400%;
+    .home-content h1 {
+      font-size: 4.5rem;
+      background: var(--gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       animation: glow 8s linear infinite;
-      font-weight: 800;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
     }
 
     @keyframes glow {
-      0% { background-position: 0% }
-      100% { background-position: 400% }
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
-    }
-
-    @keyframes fadeInUp {
-      0% { opacity: 0; transform: translateY(40px); }
-      100% { opacity: 1; transform: translateY(0); }
+      0% { background-position: 0%; }
+      100% { background-position: 400%; }
     }
 
     .fade-in {
       animation: fadeInUp 1.5s ease-out both;
     }
 
-    .home-content h1 {
-      font-size: 5rem;
-      margin-bottom: 1rem;
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .invite-btn {
-      padding: 1.2rem 3rem;
-      font-size: 1.2rem;
+      margin-top: 2rem;
+      padding: 1rem 2.5rem;
+      font-size: 1.1rem;
       background: var(--gradient);
-      color: var(--secondary);
       border: none;
       border-radius: 50px;
-      cursor: pointer;
-      text-decoration: none;
+      color: #000;
       font-weight: 600;
-      margin-top: 2rem;
+      text-decoration: none;
+      transition: 0.3s;
       display: inline-block;
-      transition: all 0.3s ease;
     }
 
     .invite-btn:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0, 247, 255, 0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 247, 255, 0.3);
     }
 
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 2rem;
       max-width: 1400px;
       margin: 0 auto;
@@ -142,79 +135,62 @@
     .feature-card {
       background: rgba(255, 255, 255, 0.05);
       padding: 2rem;
-      border-radius: 20px;
+      border-radius: 18px;
+      text-align: center;
       border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.4s ease;
       opacity: 0;
       transform: translateY(30px);
+      transition: 0.6s;
     }
 
     .feature-card.visible {
       opacity: 1;
       transform: translateY(0);
-      transition: all 0.6s ease;
     }
 
     .feature-icon {
       font-size: 2.5rem;
-      margin-bottom: 1rem;
       color: var(--accent);
-    }
-
-    .about-content {
-      max-width: 800px;
-      margin: 0 auto;
-      text-align: center;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 3rem;
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .team-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      text-align: center;
+      margin-bottom: 1rem;
     }
 
     .team-title {
-      font-size: 3rem;
-      margin-bottom: 3rem;
+      font-size: 2.8rem;
+      text-align: center;
+      margin-bottom: 2rem;
     }
 
     .team-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 2rem;
+      max-width: 1100px;
+      margin: auto;
     }
 
     .team-member {
-      background: rgba(255, 255, 255, 0.05);
       padding: 2rem;
-      border-radius: 20px;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      text-align: center;
       border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.3s ease;
-    }
-
-    .team-member:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 10px 30px rgba(0, 247, 255, 0.2);
     }
 
     .member-role {
       color: var(--accent);
-      font-size: 1.2rem;
-      margin: 1rem 0;
-      font-weight: 600;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
     }
 
-    .member-id {
-      font-size: 1.1rem;
-      opacity: 0.8;
+    .about-content,
+    .pricing-card {
+      max-width: 800px;
+      margin: auto;
+      text-align: center;
+      padding: 2rem;
       background: rgba(255, 255, 255, 0.05);
-      padding: 0.5rem 1rem;
-      border-radius: 50px;
-      display: inline-block;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
     }
 
     .pricing-container {
@@ -224,61 +200,24 @@
       flex-wrap: wrap;
     }
 
-    .pricing-card {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 2rem;
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      max-width: 400px;
-      text-align: center;
-    }
-
-    .pricing-card h2 {
-      color: var(--accent);
-      margin-bottom: 1rem;
-    }
-
-    .pricing-card .prices {
-      margin-bottom: 1rem;
-      color: #ccc;
-    }
-
-    .features-list {
-      list-style: none;
-      padding: 0;
-      color: #ddd;
-      margin-bottom: 2rem;
-    }
-
-    .features-list li {
-      margin-bottom: 0.5rem;
-    }
-
     .subscribe-btn {
+      margin-top: 1rem;
       padding: 1rem 2rem;
-      border: none;
-      border-radius: 50px;
       background: var(--gradient);
-      color: var(--secondary);
+      color: #000;
       font-weight: bold;
-      cursor: pointer;
+      border-radius: 50px;
       text-decoration: none;
-      display: inline-block;
     }
 
     @media (max-width: 768px) {
       .home-content h1 {
-        font-size: 3rem;
+        font-size: 2.8rem;
       }
 
       .nav-links {
         flex-direction: column;
         align-items: center;
-      }
-
-      .nav-button {
-        width: 100%;
-        text-align: center;
       }
     }
   </style>
@@ -297,67 +236,66 @@
 
   <section id="home" class="home">
     <div class="home-content">
-      <h1 class="glow-text">Nexus Bot</h1>
-      <p class="fade-in">⚡ The Best Discord Bot Mankind Has Ever Seen</p>
+      <h1>Nexus Bot</h1>
+      <p class="fade-in">🛡️ Your Ultimate Antimod, Antinuke & Server Guardian</p>
       <a href="https://dsc.gg/nexuus" class="invite-btn">Add to Discord</a>
     </div>
   </section>
 
   <section id="features">
     <div class="features-grid">
-      <div class="feature-card"><i class="fas fa-shield-alt feature-icon"></i><h3>General</h3><p>Essential commands for server management and utility functions.</p></div>
-      <div class="feature-card"><i class="fas fa-gavel feature-icon"></i><h3>Moderation</h3><p>Advanced moderation tools to keep your server safe and organized.</p></div>
-      <div class="feature-card"><i class="fas fa-robot feature-icon"></i><h3>Automod</h3><p>Automated moderation features to prevent spam and unwanted content.</p></div>
-      <div class="feature-card"><i class="fas fa-lock feature-icon"></i><h3>Security</h3><p>Premium security features including anti-nuke protection.</p></div>
-      <div class="feature-card"><i class="fas fa-ticket-alt feature-icon"></i><h3>Ticket System</h3><p>Advanced ticket management for user support.</p></div>
-      <div class="feature-card"><i class="fas fa-users feature-icon"></i><h3>Reaction Roles</h3><p>Automated role assignment through reactions.</p></div>
-      <div class="feature-card"><i class="fas fa-handshake feature-icon"></i><h3>Welcome</h3><p>Custom welcome messages and auto role assignment for new users.</p></div>
-      <div class="feature-card"><i class="fas fa-cogs feature-icon"></i><h3>Utility</h3><p>Helpful commands like polls, reminders, and server info.</p></div>
-      <div class="feature-card"><i class="fas fa-laugh feature-icon"></i><h3>Fun</h3><p>Interactive and entertaining commands for user engagement.</p></div>
+      <div class="feature-card"><i class="fas fa-ban feature-icon"></i><h3>Antimod</h3><p>Stop unauthorized mod actions instantly with built-in automod guards.</p></div>
+      <div class="feature-card"><i class="fas fa-bomb feature-icon"></i><h3>Antinuke</h3><p>Complete nuke protection: detects and neutralizes threats in seconds.</p></div>
+      <div class="feature-card"><i class="fas fa-door-open feature-icon"></i><h3>Welcome</h3><p>Custom messages, role assignment & joins logs all in one setup.</p></div>
+      <div class="feature-card"><i class="fas fa-robot feature-icon"></i><h3>AI Commands</h3><p>Smart assistant commands powered by AI for everyday tasks.</p></div>
+      <div class="feature-card"><i class="fas fa-user-shield feature-icon"></i><h3>Secure Roles</h3><p>Lock down roles, monitor permission changes, and auto-recover.</p></div>
+      <div class="feature-card"><i class="fas fa-hammer feature-icon"></i><h3>Advanced Logs</h3><p>Track bans, deletions, edits, and everything else with rich logs.</p></div>
+      <div class="feature-card"><i class="fas fa-bell feature-icon"></i><h3>Notifier</h3><p>Custom alerts for moderation, nukes, joins, leaves, and more.</p></div>
+      <div class="feature-card"><i class="fas fa-wrench feature-icon"></i><h3>Customization</h3><p>Setup prefix, embed color, welcome images & other advanced settings.</p></div>
     </div>
   </section>
 
   <section id="team">
-    <div class="team-content">
-      <h2 class="team-title glow-text">Meet Our Team</h2>
-      <div class="team-grid">
-        <div class="team-member"><h3 class="member-role glow-text">Owner</h3><div class="member-id">@itz_jigarrr.01</div></div>
-        <div class="team-member"><h3 class="member-role glow-text">Developer</h3><div class="member-id">@xoxo.lyy</div></div>
-        <div class="team-member"><h3 class="member-role glow-text">Core Team</h3><div class="member-id">@Ron</div></div>
-        <div class="team-member"><h3 class="member-role glow-text">Core Team</h3><div class="member-id">@just_in1.1</div></div>
-      </div>
+    <h2 class="team-title">Meet the Core Team</h2>
+    <div class="team-grid">
+      <div class="team-member"><h3 class="member-role">Owner</h3><div>@itz_jigarrr.01</div></div>
+      <div class="team-member"><h3 class="member-role">Developer</h3><div>@xoxo.lyy</div></div>
+      <div class="team-member"><h3 class="member-role">Core Team</h3><div>@Ron</div></div>
+      <div class="team-member"><h3 class="member-role">Core Team</h3><div>@just_in1.1</div></div>
     </div>
   </section>
 
   <section id="about">
     <div class="about-content fade-in">
-      <h2 class="glow-text">About Nexus Bot</h2>
-      <p>Nexus Bot is the ultimate Discord management solution, providing premium features and unparalleled server control.</p>
-      <p>Join our support server for exclusive updates and support!</p>
-      <a href="https://discord.com/invite/z9MDgmtuyT" class="invite-btn">Join Support Server!</a>
+      <h2>About Nexus Bot</h2>
+      <p>Nexus Bot is your 24/7 server guardian with AI-based moderation, unmatched antinuke protection, and all-in-one utility tools.</p>
+      <p>We're trusted by 5000+ servers. Ready to join the future of moderation?</p>
+      <a href="https://discord.com/invite/z9MDgmtuyT" class="invite-btn">Join Support Server</a>
     </div>
   </section>
 
   <section id="premium">
     <div class="pricing-container">
       <div class="pricing-card fade-in">
-        <h2>Enterprise Plan</h2>
+        <h2>Premium Plan</h2>
         <div class="prices">
-          <strong>1 month:</strong> ₹50<br>
-          <strong>3 months:</strong> ₹125<br>
-          <strong>1 year:</strong> ₹400
+          <strong>1 Month:</strong> ₹50<br>
+          <strong>3 Months:</strong> ₹125<br>
+          <strong>1 Year:</strong> ₹400
         </div>
         <ul class="features-list">
-          <li>No prefix</li>
-          <li>Fast response</li>
+          <li>No prefix mode</li>
+          <li>Faster execution</li>
+          <li>Extra security modules</li>
+          <li>Priority support</li>
         </ul>
-        <a href="https://discord.gg/wbkeeND7TZ" class="subscribe-btn">Support Server</a>
+        <a href="https://discord.gg/wbkeeND7TZ" class="subscribe-btn">Buy Premium</a>
       </div>
     </div>
   </section>
 
   <script>
-    // Reveal feature cards on scroll
+    // Reveal features on scroll
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
