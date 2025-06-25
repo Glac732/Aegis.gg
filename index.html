@@ -1,31 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Nexus Bot - Ultimate Discord Bot!</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet"/>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
 
   <style>
     :root {
-      --primary-light: #0a0a0a;
-      --secondary-light: #ffffff;
-      --primary-dark: #ffffff;
-      --secondary-dark: #0a0a0a;
+      --primary: #ffffff;
+      --secondary: #0a0a0a;
       --accent: #00f7ff;
       --gradient: linear-gradient(45deg, #00ffff, #ffffff);
-    }
-
-    [data-theme="dark"] {
-      --primary: var(--primary-dark);
-      --secondary: var(--secondary-dark);
-    }
-
-    [data-theme="light"] {
-      --primary: var(--primary-light);
-      --secondary: var(--secondary-light);
     }
 
     * {
@@ -41,7 +28,6 @@
       min-height: 100vh;
       overflow-x: hidden;
       scroll-behavior: smooth;
-      transition: background 0.5s, color 0.5s;
     }
 
     nav.nav {
@@ -49,26 +35,25 @@
       top: 0;
       left: 0;
       width: 100%;
-      padding: 1rem 2rem;
+      padding: 1.5rem;
       background: rgba(0, 0, 0, 0.95);
       backdrop-filter: blur(10px);
       z-index: 1000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .nav-links {
       display: flex;
+      justify-content: center;
+      gap: 2rem;
       flex-wrap: wrap;
-      gap: 1rem;
     }
 
     .nav-button {
-      padding: 0.6rem 1.2rem;
+      padding: 1rem 2rem;
       color: var(--primary);
       text-decoration: none;
-      border-radius: 6px;
+      border-radius: 8px;
       background: rgba(255, 255, 255, 0.05);
       transition: all 0.3s ease;
     }
@@ -77,54 +62,6 @@
       background: rgba(255, 255, 255, 0.1);
       transform: translateY(-3px);
       box-shadow: 0 5px 15px rgba(0, 247, 255, 0.2);
-    }
-
-    .theme-toggle {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 50px;
-      height: 26px;
-    }
-
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: #ccc;
-      transition: 0.4s;
-      border-radius: 34px;
-    }
-
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 20px;
-      width: 20px;
-      left: 3px;
-      bottom: 3px;
-      background-color: white;
-      transition: 0.4s;
-      border-radius: 50%;
-    }
-
-    input:checked + .slider {
-      background-color: #00f7ff;
-    }
-
-    input:checked + .slider:before {
-      transform: translateX(24px);
     }
 
     section {
@@ -140,18 +77,43 @@
       background: radial-gradient(circle at center, rgba(0,247,255,0.1) 0%, transparent 70%);
     }
 
-    .home-content h1 {
-      font-size: 4rem;
-      margin-bottom: 1rem;
-      background: var(--gradient);
+    .glow-text {
+      background: linear-gradient(90deg, #00f7ff, #ff00ff, #00ff00, #ffff00, #00f7ff);
+      background-size: 400%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      animation: float 3s ease-in-out infinite;
+      animation: glow 8s linear infinite;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    @keyframes glow {
+      0% { background-position: 0% }
+      100% { background-position: 400% }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(40px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      animation: fadeInUp 1.5s ease-out both;
+    }
+
+    .home-content h1 {
+      font-size: 5rem;
+      margin-bottom: 1rem;
     }
 
     .invite-btn {
-      padding: 1rem 2rem;
-      font-size: 1rem;
+      padding: 1.2rem 3rem;
+      font-size: 1.2rem;
       background: var(--gradient);
       color: var(--secondary);
       border: none;
@@ -160,6 +122,7 @@
       text-decoration: none;
       font-weight: 600;
       margin-top: 2rem;
+      display: inline-block;
       transition: all 0.3s ease;
     }
 
@@ -170,9 +133,9 @@
 
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 2rem;
-      max-width: 1300px;
+      max-width: 1400px;
       margin: 0 auto;
     }
 
@@ -182,11 +145,14 @@
       border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.1);
       transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(30px);
     }
 
-    .feature-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 20px 40px rgba(0, 247, 255, 0.2);
+    .feature-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: all 0.6s ease;
     }
 
     .feature-icon {
@@ -195,14 +161,114 @@
       color: var(--accent);
     }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
+    .about-content {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 3rem;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .team-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .team-title {
+      font-size: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .team-member {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2rem;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .team-member:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px rgba(0, 247, 255, 0.2);
+    }
+
+    .member-role {
+      color: var(--accent);
+      font-size: 1.2rem;
+      margin: 1rem 0;
+      font-weight: 600;
+    }
+
+    .member-id {
+      font-size: 1.1rem;
+      opacity: 0.8;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      display: inline-block;
+    }
+
+    .pricing-container {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .pricing-card {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2rem;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .pricing-card h2 {
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .pricing-card .prices {
+      margin-bottom: 1rem;
+      color: #ccc;
+    }
+
+    .features-list {
+      list-style: none;
+      padding: 0;
+      color: #ddd;
+      margin-bottom: 2rem;
+    }
+
+    .features-list li {
+      margin-bottom: 0.5rem;
+    }
+
+    .subscribe-btn {
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 50px;
+      background: var(--gradient);
+      color: var(--secondary);
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
     }
 
     @media (max-width: 768px) {
       .home-content h1 {
-        font-size: 2.5rem;
+        font-size: 3rem;
       }
 
       .nav-links {
@@ -210,8 +276,9 @@
         align-items: center;
       }
 
-      .theme-toggle {
-        margin-top: 1rem;
+      .nav-button {
+        width: 100%;
+        text-align: center;
       }
     }
   </style>
@@ -226,56 +293,84 @@
       <a href="#about" class="nav-button">About</a>
       <a href="#premium" class="nav-button">Premium</a>
     </div>
-    <div class="theme-toggle">
-      <label class="switch">
-        <input type="checkbox" id="themeSwitch">
-        <span class="slider"></span>
-      </label>
-    </div>
   </nav>
 
-  <section id="home" class="home" data-aos="fade-up">
+  <section id="home" class="home">
     <div class="home-content">
-      <h1>Nexus Bot</h1>
-      <p>The Ultimate Discord Experience</p>
+      <h1 class="glow-text">Nexus Bot</h1>
+      <p class="fade-in">⚡ The Best Discord Bot Mankind Has Ever Seen</p>
       <a href="https://dsc.gg/nexuus" class="invite-btn">Add to Discord</a>
     </div>
   </section>
 
   <section id="features">
     <div class="features-grid">
-      <div class="feature-card" data-aos="zoom-in"><i class="fas fa-handshake feature-icon"></i><h3>Welcome</h3><p>Automated welcome messages and role assignments.</p></div>
-      <div class="feature-card" data-aos="zoom-in"><i class="fas fa-wrench feature-icon"></i><h3>Utility</h3><p>Useful tools like poll, reminders, and server info.</p></div>
-      <div class="feature-card" data-aos="zoom-in"><i class="fas fa-laugh feature-icon"></i><h3>Fun</h3><p>Engaging fun commands like memes, jokes, and more.</p></div>
-      <div class="feature-card" data-aos="zoom-in"><i class="fas fa-shield-alt feature-icon"></i><h3>General</h3><p>Essential commands for server management and utility functions.</p></div>
-      <div class="feature-card" data-aos="zoom-in"><i class="fas fa-gavel feature-icon"></i><h3>Moderation</h3><p>Advanced moderation tools to keep your server safe and organized.</p></div>
-      <div class="feature-card" data-aos="zoom-in"><i class="fas fa-robot feature-icon"></i><h3>Automod</h3><p>Automated moderation features to prevent spam and unwanted content.</p></div>
-      <div class="feature-card" data-aos="zoom-in"><i class="fas fa-lock feature-icon"></i><h3>Security</h3><p>Premium security features including anti-nuke protection.</p></div>
-      <div class="feature-card" data-aos="zoom-in"><i class="fas fa-ticket-alt feature-icon"></i><h3>Ticket System</h3><p>Advanced ticket management for user support.</p></div>
-      <div class="feature-card" data-aos="zoom-in"><i class="fas fa-users feature-icon"></i><h3>Reaction Roles</h3><p>Automated role assignment through reactions.</p></div>
-      <div class="feature-card" data-aos="zoom-in"><i class="fas fa-gift feature-icon"></i><h3>Giveaways</h3><p>Easy-to-run giveaways with timer, entries, and auto-winners.</p></div>
+      <div class="feature-card"><i class="fas fa-shield-alt feature-icon"></i><h3>General</h3><p>Essential commands for server management and utility functions.</p></div>
+      <div class="feature-card"><i class="fas fa-gavel feature-icon"></i><h3>Moderation</h3><p>Advanced moderation tools to keep your server safe and organized.</p></div>
+      <div class="feature-card"><i class="fas fa-robot feature-icon"></i><h3>Automod</h3><p>Automated moderation features to prevent spam and unwanted content.</p></div>
+      <div class="feature-card"><i class="fas fa-lock feature-icon"></i><h3>Security</h3><p>Premium security features including anti-nuke protection.</p></div>
+      <div class="feature-card"><i class="fas fa-ticket-alt feature-icon"></i><h3>Ticket System</h3><p>Advanced ticket management for user support.</p></div>
+      <div class="feature-card"><i class="fas fa-users feature-icon"></i><h3>Reaction Roles</h3><p>Automated role assignment through reactions.</p></div>
+      <div class="feature-card"><i class="fas fa-handshake feature-icon"></i><h3>Welcome</h3><p>Custom welcome messages and auto role assignment for new users.</p></div>
+      <div class="feature-card"><i class="fas fa-cogs feature-icon"></i><h3>Utility</h3><p>Helpful commands like polls, reminders, and server info.</p></div>
+      <div class="feature-card"><i class="fas fa-laugh feature-icon"></i><h3>Fun</h3><p>Interactive and entertaining commands for user engagement.</p></div>
     </div>
   </section>
 
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <section id="team">
+    <div class="team-content">
+      <h2 class="team-title glow-text">Meet Our Team</h2>
+      <div class="team-grid">
+        <div class="team-member"><h3 class="member-role glow-text">Owner</h3><div class="member-id">@itz_jigarrr.01</div></div>
+        <div class="team-member"><h3 class="member-role glow-text">Developer</h3><div class="member-id">@xoxo.lyy</div></div>
+        <div class="team-member"><h3 class="member-role glow-text">Core Team</h3><div class="member-id">@Ron</div></div>
+        <div class="team-member"><h3 class="member-role glow-text">Core Team</h3><div class="member-id">@just_in1.1</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="about-content fade-in">
+      <h2 class="glow-text">About Nexus Bot</h2>
+      <p>Nexus Bot is the ultimate Discord management solution, providing premium features and unparalleled server control.</p>
+      <p>Join our support server for exclusive updates and support!</p>
+      <a href="https://discord.com/invite/z9MDgmtuyT" class="invite-btn">Join Support Server!</a>
+    </div>
+  </section>
+
+  <section id="premium">
+    <div class="pricing-container">
+      <div class="pricing-card fade-in">
+        <h2>Enterprise Plan</h2>
+        <div class="prices">
+          <strong>1 month:</strong> ₹50<br>
+          <strong>3 months:</strong> ₹125<br>
+          <strong>1 year:</strong> ₹400
+        </div>
+        <ul class="features-list">
+          <li>No prefix</li>
+          <li>Fast response</li>
+        </ul>
+        <a href="https://discord.gg/wbkeeND7TZ" class="subscribe-btn">Support Server</a>
+      </div>
+    </div>
+  </section>
+
   <script>
-    AOS.init();
+    // Reveal feature cards on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
 
-    // Theme toggle logic
-    const toggleSwitch = document.getElementById('themeSwitch');
-    const root = document.documentElement;
-
-    toggleSwitch.addEventListener('change', () => {
-      const theme = toggleSwitch.checked ? 'light' : 'dark';
-      root.setAttribute('data-theme', theme);
-      localStorage.setItem('theme', theme);
-    });
-
-    window.addEventListener('DOMContentLoaded', () => {
-      const savedTheme = localStorage.getItem('theme') || 'dark';
-      root.setAttribute('data-theme', savedTheme);
-      toggleSwitch.checked = savedTheme === 'light';
+    document.querySelectorAll('.feature-card').forEach(card => {
+      observer.observe(card);
     });
   </script>
+
+  <script src="//code.tidio.co/0palmwvgehxscbgijvlsrpxntovje7aw.js" async></script>
 </body>
 </html>
